@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=1" />
+    <title>Chart Demo</title>
+    <script src="js/echarts.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <style type="text/css">
+        body, html,#main{width: 100%;height: 100%;overflow: hidden;margin:0;}
+    </style>
+</head>
+<body>
+    <!--为Echarts准备一个具备大小的Dom -->
+    <div id="main"></div>
+</body>
+<script type="text/javascript">
+    //基于准备好的dom 初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    var result1 = {
+                stuName: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"],
+                data: [5, 20, 36, 10, 10, 20]
+            };
+    //指定图表的配置项和数据
+    var nameData = [
+            '孙珊','王智谨','陈琴','宋杨','安炜杰',
+            '谢雨飞','欧阳欣','马靓','叶凯','陈博闻',
+    ];
+    var overallData = [
+            10,23,43,12,11,
+            2,4,23,6,7,
+    ];
+    var teacherData = [
+        10,23,43,12,11,
+        2,4,23,6,7,
+        5, 20, 36, 1, 1,
+        10,23,43,12,11,
+        2,4,23,6,7,
+    ];
+    var studentData = [
+        10,23,43,12,11,
+        2,4,23,6,7,
+        5, 20, 36, 10, 10,
+        10,23,43,12,11,
+        2,4,23,6,7,
+    ];
+    var option = {
+        baseOption: {
+            title: {
+                text: '期末汇报投票结果',
+                textStyle: {
+                    fontSize: 25,
+                },
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                },
+            },
+            toolbox: {
+                itemSize: 20,
+                feature: {
+                    saveAsImage: {
+                        type: 'png',
+                        show: true,
+                    },
+                    dataView: {
+                        show: true,
+                    }
+                },
+            },
+            legend: {
+                data: ['整体投票数','老师投票数','同学投票数'],
+                selected: {
+                    '老师投票数': false, '同学投票数': false
+                },
+                selectedMode: 'single',
+            },
+            grid: {//表格位置
+                left: 50,
+                top: 50,
+                right: 45,
+                bottom: 35
+            },
+            xAxis: {
+                name: '票数',
+            },
+            yAxis: {
+                type: 'category',
+                data: nameData,
+                axisLabel: {interval: 0},
+                splitLine: {show: false},
+            },
+            color: ['#61a0a8', '#bda29a', '#44525d', '#c4ccd3'],
+            series: [
+                {
+                    left: 100,
+                    name: '整体投票数',
+                    type: 'bar',
+                    data: overallData,
+                    itemStyle : {
+                        normal: {
+                            label: {show: true, position: 'inside'}
+                        }
+                    },
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                        ]
+                    },
+                },
+                {
+                    name: '老师投票数',
+                    type: 'bar',
+                    data: teacherData,
+                    itemStyle : {
+                        normal: {
+                            label: {show: true, position: 'inside'}
+                        }
+                    },
+                    markLine : {//平均线
+                        data : [
+                            {type : 'average', name: '整体票数平均线'}
+                        ]
+                    },
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                },
+                {
+                    name: '同学投票数',
+                    type: 'bar',
+                    data: studentData,
+                    itemStyle : {
+                        normal: {
+                            label: {show: true, position: 'inside'}
+                        }
+                    },
+                    markLine : {//平均线
+                        data : [
+                            {type : 'average', name: '整体票数平均线'}
+                        ]
+                    },
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                },
+            ]
+        },
+        media: [
+            {
+                query: {
+                    maxWidth: 550           // 宽度小于等于550
+                },
+                option: {
+                    legend: {                   // legend 放在底部中间。
+                        right: 5,
+                        top: 40,
+                        orient: 'vertical'    // legend 横向布局。
+                    },
+                },
+            }
+        ]
+    };
+
+    //使用刚指定的配置项和数据显示图表
+    myChart.setOption(option);
+</script>
+</html>
